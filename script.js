@@ -31,7 +31,7 @@ function renderMenu() {
         grid.className = 'product-grid';
 
         category.items.forEach(item => {
-            toppingState[item.id] = []; // Setup default topping state
+            toppingState[item.id] = []; 
 
             const card = document.createElement('div');
             card.className = 'card';
@@ -62,7 +62,6 @@ function renderMenu() {
                         ${levelsHtml}
                     </div>
 
-                    <!-- Perbaikan: Menggunakan atribut data-* untuk menghindari error tanda kutip -->
                     <button class="btn-gold full-width btn-add-cart" style="margin-top: 1.5rem;"
                         data-id="${item.id}"
                         data-name="${item.name}"
@@ -107,7 +106,7 @@ function attachToppingListeners() {
     });
 }
 
-// 3. Listener Tombol Masukkan Keranjang (PERBAIKAN ERROR)
+// 3. Listener Tombol Masukkan Keranjang
 function attachCartButtonListeners() {
     document.querySelectorAll('.btn-add-cart').forEach(btn => {
         btn.addEventListener('click', function() {
@@ -230,22 +229,20 @@ document.getElementById('close-modal').onclick = () => {
     overlay.classList.remove('show');
 };
 
+// Logika Pergantian Opsi Pengiriman
 document.getElementById('delivery-option').addEventListener('change', function() {
-    const dateGroup = document.getElementById('pickup-date-group');
     const addrGroup = document.getElementById('address-group');
-    const dateInput = document.getElementById('pickup-date');
     const addrInput = document.getElementById('address');
+    const dateLabel = document.getElementById('date-label');
 
     if (this.value === 'Ambil Sendiri') {
-        dateGroup.style.display = 'block';
         addrGroup.style.display = 'none';
-        dateInput.required = true;
         addrInput.required = false;
+        dateLabel.innerText = 'Tanggal Pengambilan *'; // Label berubah
     } else {
-        dateGroup.style.display = 'none';
         addrGroup.style.display = 'block';
-        dateInput.required = false;
         addrInput.required = true;
+        dateLabel.innerText = 'Tanggal Pengiriman *'; // Label berubah
     }
 });
 
@@ -257,6 +254,7 @@ document.getElementById('form-checkout').addEventListener('submit', function(e) 
     const delivery = document.getElementById('delivery-option').value;
     const date = document.getElementById('pickup-date').value;
     const address = document.getElementById('address').value;
+    const mapsLink = document.getElementById('maps-link').value;
     const payment = document.getElementById('payment-method').value;
     const notes = document.getElementById('notes').value || "-";
 
@@ -268,12 +266,23 @@ document.getElementById('form-checkout').addEventListener('submit', function(e) 
         return `${index + 1}. ${item.qty}x ${item.name} (${item.categoryName})\n   - Topping: ${item.toppings.length ? item.toppings.join(', ') : 'Tanpa Topping'}\n   - Level: ${item.levelName} (+${formatRp(item.levelPrice)})\n   Subtotal: ${formatRp(itemTotal)}`;
     }).join('\n\n');
 
+    let deliveryInfo = "";
+    if (delivery === 'Ambil Sendiri') {
+        deliveryInfo = `Tanggal Ambil: ${date}`;
+    } else {
+        // Tanggal, Alamat, dan Link Maps digabungkan
+        deliveryInfo = `Tanggal Kirim: ${date}\nAlamat Kirim: ${address}`;
+        if (mapsLink) {
+            deliveryInfo += `\nLink Maps: ${mapsLink}`;
+        }
+    }
+
     const message = `*DE'ROYALE DONUTS - PESANAN BARU*
     
 *Data Pemesan:*
 Nama: ${name}
 Opsi Pengiriman: ${delivery}
-${delivery === 'Ambil Sendiri' ? `Tanggal Ambil: ${date}` : `Alamat Kirim: ${address}`}
+${deliveryInfo}
 Metode Pembayaran: ${payment}
 
 *Daftar Pesanan:*
