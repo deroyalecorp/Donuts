@@ -49,7 +49,7 @@
                 </div>
                 
                 <div class="form-group">
-                    <label>Opsi Pengambilan</label>
+                    <label>Opsi Pengiriman</label>
                     <select id="delivery-option" required>
                         <option value="Ambil Sendiri">Ambil Sendiri (Pickup)</option>
                         <option value="Kirim">Kirim (Delivery)</option>
@@ -57,13 +57,16 @@
                 </div>
 
                 <div class="form-group" id="pickup-date-group">
-                    <label>Tanggal Pengambilan *</label>
-                    <input type="date" id="pickup-date">
+                    <label id="date-label">Tanggal Pengambilan *</label>
+                    <input type="date" id="pickup-date" required>
                 </div>
 
                 <div class="form-group" id="address-group" style="display: none;">
-                    <label>Alamat Lengkap *</label>
-                    <textarea id="address" rows="3" placeholder="Jalan, RT/RW, Patokan..."></textarea>
+                    <label>Alamat Lengkap & Patokan *</label>
+                    <textarea id="address" rows="3" placeholder="Jalan, No Rumah, RT/RW, Patokan..."></textarea>
+                    
+                    <label style="margin-top: 10px;">Link Google Maps (Biar Akurat)</label>
+                    <input type="url" id="maps-link" placeholder="Tempel link Share Lokasi Maps di sini">
                 </div>
 
                 <div class="form-group">
