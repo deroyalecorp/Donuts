@@ -2,7 +2,7 @@
 
 // State Management
 let cart = [];
-let toppingState = {}; // Format: { "reg-1": ["Coklat", "Keju"] }
+let toppingState = {}; 
 
 // DOM Elements
 const menuContainer = document.getElementById('menu-container');
@@ -22,7 +22,6 @@ function renderMenu() {
     menuContainer.innerHTML = '';
     
     CONFIG.categories.forEach(category => {
-        // Price Divider
         const divider = document.createElement('div');
         divider.className = 'price-divider';
         divider.innerHTML = `<span>${category.name} - ${formatRp(category.price)}</span>`;
@@ -32,18 +31,15 @@ function renderMenu() {
         grid.className = 'product-grid';
 
         category.items.forEach(item => {
-            // Setup default topping state
-            toppingState[item.id] = [];
+            toppingState[item.id] = []; // Setup default topping state
 
             const card = document.createElement('div');
             card.className = 'card';
             
-            // Generate Toppings HTML
             const toppingsHtml = item.toppings.map(t => 
                 `<button type="button" class="topping-btn" data-id="${item.id}" data-val="${t}">${t}</button>`
             ).join('');
 
-            // Generate Level HTML
             const levelsHtml = CONFIG.toppingLevels.map((lvl, idx) => `
                 <label class="level-label">
                     <input type="radio" name="level-${item.id}" value="${lvl.id}" data-price="${lvl.price}" data-name="${lvl.name}" ${idx === 0 ? 'checked' : ''}>
@@ -66,7 +62,12 @@ function renderMenu() {
                         ${levelsHtml}
                     </div>
 
-                    <button class="btn-gold full-width" style="margin-top: 1.5rem;" onclick="addToCart('${item.id}', '${item.name}', ${category.price}, '${category.name}')">
+                    <!-- Perbaikan: Menggunakan atribut data-* untuk menghindari error tanda kutip -->
+                    <button class="btn-gold full-width btn-add-cart" style="margin-top: 1.5rem;"
+                        data-id="${item.id}"
+                        data-name="${item.name}"
+                        data-price="${category.price}"
+                        data-category="${category.name}">
                         + Keranjang
                     </button>
                 </div>
@@ -77,9 +78,10 @@ function renderMenu() {
     });
 
     attachToppingListeners();
+    attachCartButtonListeners();
 }
 
-// 2. Logika Topping (Maks 2, Shift System)
+// 2. Logika Topping Maks 2
 function attachToppingListeners() {
     document.querySelectorAll('.topping-btn').forEach(btn => {
         btn.addEventListener('click', function() {
@@ -88,15 +90,12 @@ function attachToppingListeners() {
             let selections = toppingState[cardId];
 
             if (selections.includes(val)) {
-                // Unselect
                 selections = selections.filter(t => t !== val);
                 this.classList.remove('selected');
             } else {
-                // Select
                 selections.push(val);
                 this.classList.add('selected');
                 
-                // Shift system jika lebih dari 2
                 if (selections.length > 2) {
                     const removed = selections.shift();
                     const removedBtn = document.querySelector(`.topping-btn[data-id="${cardId}"][data-val="${removed}"]`);
@@ -108,16 +107,28 @@ function attachToppingListeners() {
     });
 }
 
-// 3. Logika Keranjang
-window.addToCart = function(id, name, basePrice, categoryName) {
-    const selectedToppings = [...toppingState[id]]; // clone array
+// 3. Listener Tombol Masukkan Keranjang (PERBAIKAN ERROR)
+function attachCartButtonListeners() {
+    document.querySelectorAll('.btn-add-cart').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const id = this.getAttribute('data-id');
+            const name = this.getAttribute('data-name');
+            const price = parseInt(this.getAttribute('data-price'));
+            const category = this.getAttribute('data-category');
+            
+            addToCart(id, name, price, category);
+        });
+    });
+}
+
+// 4. Logika Keranjang Utama
+function addToCart(id, name, basePrice, categoryName) {
+    const selectedToppings = [...toppingState[id]]; 
     
-    // Get Selected Level
     const levelRadio = document.querySelector(`input[name="level-${id}"]:checked`);
     const levelPrice = parseInt(levelRadio.getAttribute('data-price'));
     const levelName = levelRadio.getAttribute('data-name');
 
-    // Buat ID unik untuk variasi item di keranjang
     const cartItemId = `${id}-${selectedToppings.join('-')}-${levelName}`;
     const existingItem = cart.find(item => item.cartItemId === cartItemId);
 
@@ -133,8 +144,8 @@ window.addToCart = function(id, name, basePrice, categoryName) {
     }
 
     updateCartUI();
-    showToast(`${name} ditambahkan ke keranjang!`);
-};
+    showToast(`${name} ditambahkan!`);
+}
 
 function updateCartUI() {
     cartItems.innerHTML = '';
@@ -196,7 +207,7 @@ function showToast(msg) {
     setTimeout(() => toastEl.classList.remove('show'), 2500);
 }
 
-// 4. UI Toggles & Modals
+// 5. UI Toggles & Modals
 document.getElementById('cart-toggle').onclick = () => { cartSidebar.classList.add('open'); overlay.classList.add('show'); };
 document.getElementById('btn-selesai').onclick = () => { cartSidebar.classList.add('open'); overlay.classList.add('show'); };
 
@@ -210,7 +221,6 @@ document.getElementById('btn-checkout-modal').onclick = () => {
     checkoutModal.classList.add('open');
     overlay.classList.add('show');
     
-    // Set min date ke hari ini
     document.getElementById('pickup-date').min = new Date().toISOString().split('T')[0];
     document.getElementById('pickup-date').value = new Date().toISOString().split('T')[0];
 };
@@ -220,7 +230,6 @@ document.getElementById('close-modal').onclick = () => {
     overlay.classList.remove('show');
 };
 
-// Toggle Form Pengiriman
 document.getElementById('delivery-option').addEventListener('change', function() {
     const dateGroup = document.getElementById('pickup-date-group');
     const addrGroup = document.getElementById('address-group');
@@ -240,7 +249,7 @@ document.getElementById('delivery-option').addEventListener('change', function()
     }
 });
 
-// 5. Checkout & WhatsApp Submit
+// 6. Checkout & WhatsApp Submit
 document.getElementById('form-checkout').addEventListener('submit', function(e) {
     e.preventDefault();
     
@@ -253,7 +262,6 @@ document.getElementById('form-checkout').addEventListener('submit', function(e) 
 
     let grandTotal = 0;
     
-    // Formatting Order List
     let orderText = cart.map((item, index) => {
         const itemTotal = (item.basePrice + item.levelPrice) * item.qty;
         grandTotal += itemTotal;
@@ -280,5 +288,5 @@ ${notes}
     window.open(waUrl, '_blank');
 });
 
-// Start
+// Start Render
 renderMenu();
