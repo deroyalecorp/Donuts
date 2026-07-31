@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>De'Royale Donuts</title>
-    <!-- Google Fonts: Playfair Display & Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -56,17 +55,19 @@
                     </select>
                 </div>
 
+                <!-- Bagian Tanggal selalu tampil -->
                 <div class="form-group" id="pickup-date-group">
                     <label id="date-label">Tanggal Pengambilan *</label>
                     <input type="date" id="pickup-date" required>
                 </div>
 
+                <!-- Bagian Alamat dan Link Maps -->
                 <div class="form-group" id="address-group" style="display: none;">
                     <label>Alamat Lengkap & Patokan *</label>
                     <textarea id="address" rows="3" placeholder="Jalan, No Rumah, RT/RW, Patokan..."></textarea>
                     
-                    <label style="margin-top: 10px;">Link Google Maps (Biar Akurat)</label>
-                    <input type="url" id="maps-link" placeholder="Tempel link Share Lokasi Maps di sini">
+                    <label style="margin-top: 10px;">Link Share Lokasi (Maps)</label>
+                    <input type="url" id="maps-link" placeholder="Cth: https://maps.app.goo.gl/...">
                 </div>
 
                 <div class="form-group">
