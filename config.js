@@ -3,7 +3,7 @@
 // Daftar Topping Universal untuk semua varian
 const defaultToppings = ["Keju", "Meses", "Kacang", "Crumble", "Marsh"];
 
-// Daftar 7 Varian Rasa Utama dengan topping yang sudah disamaratakan
+// Daftar 7 Varian Rasa Utama
 const baseFlavors = [
     { name: "Coklat", img: "https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=400&q=80", toppings: defaultToppings },
     { name: "Matcha", img: "https://images.unsplash.com/photo-1588643806968-3e4bce584749?auto=format&fit=crop&w=400&q=80", toppings: defaultToppings },
@@ -14,7 +14,6 @@ const baseFlavors = [
     { name: "Taro", img: "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=400&q=80", toppings: defaultToppings }
 ];
 
-// Fungsi untuk menyalin rasa ke masing-masing kategori & membuat ID unik
 const generateItems = (prefix) => {
     return baseFlavors.map((item, index) => ({
         ...item,
@@ -23,26 +22,39 @@ const generateItems = (prefix) => {
 };
 
 const CONFIG = {
-    whatsappNumber: "6287881413779", // Pastikan nomor ini sudah benar tanpa tanda + atau angka 0 di depan 62
-    toppingLevels: [
-        { id: "normal", name: "Normal", price: 0 },
-        { id: "reffine", name: "Reffine", price: 1000 },
-        { id: "deborant", name: "Deborant", price: 2000 }
-    ],
+    whatsappNumber: "6287881413779", // Pastikan nomor WA benar
     categories: [
         {
             name: "Regular Donut's",
             price: 3000,
+            status: "available", // Tersedia
+            toppingLevels: [
+                { id: "normal", name: "Normal", price: 0 },
+                { id: "reffine", name: "Reffine", price: 1000 },
+                { id: "deborant", name: "Deborant", price: 2000 }
+            ],
             items: generateItems('reg')
         },
         {
             name: "Medium Donut",
             price: 5000,
+            status: "coming_soon", // Kunci tombol (Comming Soon)
+            toppingLevels: [
+                { id: "normal", name: "Normal", price: 0 },
+                { id: "reffine", name: "Reffine", price: 1000 },
+                { id: "deborant", name: "Deborant", price: 2000 }
+            ],
             items: generateItems('med')
         },
         {
             name: "Royale Donut's",
             price: 8000,
+            status: "available", // Tersedia
+            toppingLevels: [
+                { id: "normal", name: "Normal", price: 0 },
+                { id: "reffine", name: "Reffine", price: 2000 }, // Harga Khusus
+                { id: "deborant", name: "Deborant", price: 3000 } // Harga Khusus
+            ],
             items: generateItems('roy')
         }
     ]
