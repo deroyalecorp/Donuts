@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>De'Royale Donuts</title>
+    <!-- Google Fonts: Playfair Display & Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>De'Royale Donuts</h1>
+            <button id="cart-toggle" class="btn-gold-outline">🛒 Keranjang (<span id="cart-count">0</span>)</button>
+        </div>
+    </header>
+
+    <main>
+        <div id="menu-container"></div>
+        <div class="finish-section">
+            <button id="btn-selesai" class="btn-gold large">Selesai Memilih</button>
+        </div>
+    </main>
+
+    <!-- Sidebar Keranjang -->
+    <div id="cart-sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <h2>Keranjang Anda</h2>
+            <button id="close-cart" class="btn-close">&times;</button>
+        </div>
+        <div id="cart-items" class="cart-items"></div>
+        <div class="cart-footer">
+            <div class="cart-total">Total: <span id="total-price">Rp 0</span></div>
+            <button id="btn-checkout-modal" class="btn-gold full-width">Checkout via WhatsApp</button>
+        </div>
+    </div>
+    <div id="overlay" class="overlay"></div>
+
+    <!-- Modal Checkout -->
+    <div id="checkout-modal" class="modal">
+        <div class="modal-content">
+            <button id="close-modal" class="btn-close">&times;</button>
+            <h2>Detail Pengiriman</h2>
+            <form id="form-checkout">
+                <div class="form-group">
+                    <label>Nama Lengkap *</label>
+                    <input type="text" id="cust-name" required placeholder="Masukkan nama Anda">
+                </div>
+                
+                <div class="form-group">
+                    <label>Opsi Pengambilan</label>
+                    <select id="delivery-option" required>
+                        <option value="Ambil Sendiri">Ambil Sendiri (Pickup)</option>
+                        <option value="Kirim">Kirim (Delivery)</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="pickup-date-group">
+                    <label>Tanggal Pengambilan *</label>
+                    <input type="date" id="pickup-date">
+                </div>
+
+                <div class="form-group" id="address-group" style="display: none;">
+                    <label>Alamat Lengkap *</label>
+                    <textarea id="address" rows="3" placeholder="Jalan, RT/RW, Patokan..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Metode Pembayaran</label>
+                    <select id="payment-method" required>
+                        <option value="QRIS">QRIS</option>
+                        <option value="Cash">Cash (Bayar di tempat)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Catatan Tambahan (Opsional)</label>
+                    <textarea id="notes" rows="2" placeholder="Cth: Pisahkan gulanya..."></textarea>
+                </div>
+
+                <button type="submit" class="btn-gold full-width mt-10">Kirim Pesanan</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast"></div>
+
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
