@@ -14,7 +14,6 @@ const totalPriceEl = document.getElementById('total-price');
 const toastEl = document.getElementById('toast');
 const checkoutModal = document.getElementById('checkout-modal');
 
-// Format Rupiah
 const formatRp = (num) => 'Rp ' + num.toLocaleString('id-ID');
 
 // 1. Inisialisasi & Render Produk
@@ -29,6 +28,8 @@ function renderMenu() {
 
         const grid = document.createElement('div');
         grid.className = 'product-grid';
+        
+        const isComingSoon = category.status === 'coming_soon';
 
         category.items.forEach(item => {
             toppingState[item.id] = []; 
@@ -36,16 +37,32 @@ function renderMenu() {
             const card = document.createElement('div');
             card.className = 'card';
             
+            // Generate Topping & Kunci (disable) jika Coming Soon
             const toppingsHtml = item.toppings.map(t => 
-                `<button type="button" class="topping-btn" data-id="${item.id}" data-val="${t}">${t}</button>`
+                `<button type="button" class="topping-btn" data-id="${item.id}" data-val="${t}" ${isComingSoon ? 'disabled' : ''}>${t}</button>`
             ).join('');
 
-            const levelsHtml = CONFIG.toppingLevels.map((lvl, idx) => `
-                <label class="level-label">
-                    <input type="radio" name="level-${item.id}" value="${lvl.id}" data-price="${lvl.price}" data-name="${lvl.name}" ${idx === 0 ? 'checked' : ''}>
+            // Generate Level dari pengaturan harga di dalam setiap kategori
+            const levelsHtml = category.toppingLevels.map((lvl, idx) => `
+                <label class="level-label ${isComingSoon ? 'disabled' : ''}">
+                    <input type="radio" name="level-${item.id}" value="${lvl.id}" data-price="${lvl.price}" data-name="${lvl.name}" ${idx === 0 ? 'checked' : ''} ${isComingSoon ? 'disabled' : ''}>
                     ${lvl.name} ${lvl.price > 0 ? `(+${formatRp(lvl.price)})` : ''}
                 </label>
             `).join('');
+
+            // Tentukan bentuk tombol (Bisa dibeli atau Coming Soon)
+            let buttonHtml = '';
+            if (isComingSoon) {
+                buttonHtml = `<button class="btn-disabled" style="margin-top: 1.5rem;" disabled>Coming Soon</button>`;
+            } else {
+                buttonHtml = `<button class="btn-gold full-width btn-add-cart" style="margin-top: 1.5rem;"
+                    data-id="${item.id}"
+                    data-name="${item.name}"
+                    data-price="${category.price}"
+                    data-category="${category.name}">
+                    + Keranjang
+                </button>`;
+            }
 
             card.innerHTML = `
                 <img src="${item.img}" alt="${item.name}" loading="lazy">
@@ -62,13 +79,7 @@ function renderMenu() {
                         ${levelsHtml}
                     </div>
 
-                    <button class="btn-gold full-width btn-add-cart" style="margin-top: 1.5rem;"
-                        data-id="${item.id}"
-                        data-name="${item.name}"
-                        data-price="${category.price}"
-                        data-category="${category.name}">
-                        + Keranjang
-                    </button>
+                    ${buttonHtml}
                 </div>
             `;
             grid.appendChild(card);
@@ -84,6 +95,8 @@ function renderMenu() {
 function attachToppingListeners() {
     document.querySelectorAll('.topping-btn').forEach(btn => {
         btn.addEventListener('click', function() {
+            if (this.disabled) return; // Proteksi tambahan
+
             const cardId = this.getAttribute('data-id');
             const val = this.getAttribute('data-val');
             let selections = toppingState[cardId];
@@ -120,10 +133,9 @@ function attachCartButtonListeners() {
     });
 }
 
-// 4. Logika Keranjang Utama
+// 4. Logika Keranjang
 function addToCart(id, name, basePrice, categoryName) {
     const selectedToppings = [...toppingState[id]]; 
-    
     const levelRadio = document.querySelector(`input[name="level-${id}"]:checked`);
     const levelPrice = parseInt(levelRadio.getAttribute('data-price'));
     const levelName = levelRadio.getAttribute('data-name');
@@ -214,8 +226,20 @@ const closeCartFunc = () => { cartSidebar.classList.remove('open'); overlay.clas
 document.getElementById('close-cart').onclick = closeCartFunc;
 overlay.onclick = () => { closeCartFunc(); checkoutModal.classList.remove('open'); };
 
+// VALIDASI CEKOUT (MINIMAL ORDER 3000)
 document.getElementById('btn-checkout-modal').onclick = () => {
     if (cart.length === 0) return alert("Keranjang masih kosong!");
+    
+    // Menghitung jumlah donat berharga 3.000 yang ada di keranjang
+    const qtyDonut3000 = cart
+        .filter(item => item.basePrice === 3000)
+        .reduce((sum, item) => sum + item.qty, 0);
+        
+    // Jika ada donat harga 3000 di keranjang tapi total qty-nya KURANG DARI 3
+    if (qtyDonut3000 > 0 && qtyDonut3000 < 3) {
+        return alert("Peringatan: Minimal pembelian untuk varian Regular Donut's (Rp 3.000) adalah 3 pcs!\nSilakan tambah pesanan Regular Anda.");
+    }
+
     closeCartFunc();
     checkoutModal.classList.add('open');
     overlay.classList.add('show');
@@ -229,7 +253,6 @@ document.getElementById('close-modal').onclick = () => {
     overlay.classList.remove('show');
 };
 
-// Logika Pergantian Opsi Pengiriman
 document.getElementById('delivery-option').addEventListener('change', function() {
     const addrGroup = document.getElementById('address-group');
     const addrInput = document.getElementById('address');
@@ -238,15 +261,15 @@ document.getElementById('delivery-option').addEventListener('change', function()
     if (this.value === 'Ambil Sendiri') {
         addrGroup.style.display = 'none';
         addrInput.required = false;
-        dateLabel.innerText = 'Tanggal Pengambilan *'; // Label berubah
+        dateLabel.innerText = 'Tanggal Pengambilan *';
     } else {
         addrGroup.style.display = 'block';
         addrInput.required = true;
-        dateLabel.innerText = 'Tanggal Pengiriman *'; // Label berubah
+        dateLabel.innerText = 'Tanggal Pengiriman *';
     }
 });
 
-// 6. Checkout & WhatsApp Submit
+// 6. Checkout Submit ke WhatsApp
 document.getElementById('form-checkout').addEventListener('submit', function(e) {
     e.preventDefault();
     
@@ -270,7 +293,6 @@ document.getElementById('form-checkout').addEventListener('submit', function(e) 
     if (delivery === 'Ambil Sendiri') {
         deliveryInfo = `Tanggal Ambil: ${date}`;
     } else {
-        // Tanggal, Alamat, dan Link Maps digabungkan
         deliveryInfo = `Tanggal Kirim: ${date}\nAlamat Kirim: ${address}`;
         if (mapsLink) {
             deliveryInfo += `\nLink Maps: ${mapsLink}`;
