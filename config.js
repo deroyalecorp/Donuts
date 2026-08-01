@@ -38,7 +38,7 @@ const CONFIG = {
         {
             name: "Medium Donut",
             price: 5000,
-            status: "coming_soon", // Kunci tombol (Comming Soon)
+            status: "coming_soon", // Kunci tombol (Coming Soon)
             toppingLevels: [
                 { id: "normal", name: "Normal", price: 0 },
                 { id: "reffine", name: "Reffine", price: 1000 },
@@ -49,11 +49,11 @@ const CONFIG = {
         {
             name: "Royale Donut's",
             price: 8000,
-            status: "available", // Tersedia
+            status: "coming_soon", // Kunci tombol (Coming Soon)
             toppingLevels: [
                 { id: "normal", name: "Normal", price: 0 },
-                { id: "reffine", name: "Reffine", price: 2000 }, // Harga Khusus
-                { id: "deborant", name: "Deborant", price: 3000 } // Harga Khusus
+                { id: "reffine", name: "Reffine", price: 2000 }, 
+                { id: "deborant", name: "Deborant", price: 3000 } 
             ],
             items: generateItems('roy')
         }
