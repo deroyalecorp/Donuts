@@ -10,7 +10,7 @@ const baseFlavors = [
     { name: "Strawberry", img: "images/strawberry.jpeg", toppings: defaultToppings },
     { name: "Tiramisu", img: "images/tiramisu.jpeg", toppings: defaultToppings },
     { name: "Red Velvet", img: "images/red valvet.jpeg", toppings: defaultToppings },
-    { name: "Kacang", img: "images.kacang.jpeg", toppings: defaultToppings },
+    { name: "Kacang", img: "images/kacang.jpeg", toppings: defaultToppings },
     { name: "Taro", img: "images/taro.jpeg", toppings: defaultToppings }
 ];
 
