@@ -16,7 +16,33 @@ const checkoutModal = document.getElementById('checkout-modal');
 
 const formatRp = (num) => 'Rp ' + num.toLocaleString('id-ID');
 
-// 1. Inisialisasi & Render Produk
+// 1. Logika Countdown Timer
+function startCountdown() {
+    const targetDate = new Date(CONFIG.targetOpeningDate).getTime();
+
+    const timer = setInterval(() => {
+        const now = new Date().getTime();
+        const difference = targetDate - now;
+
+        if (difference < 0) {
+            clearInterval(timer);
+            document.getElementById('countdown').innerHTML = "<h3 style='color: var(--gold);'>WE ARE OPEN NOW!</h3>";
+            return;
+        }
+
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+        document.getElementById('days').innerText = String(days).padStart(2, '0');
+        document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+        document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+        document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+    }, 1000);
+}
+
+// 2. Inisialisasi & Render Produk
 function renderMenu() {
     menuContainer.innerHTML = '';
     
@@ -37,12 +63,10 @@ function renderMenu() {
             const card = document.createElement('div');
             card.className = 'card';
             
-            // Generate Topping & Kunci (disable) jika Coming Soon
             const toppingsHtml = item.toppings.map(t => 
                 `<button type="button" class="topping-btn" data-id="${item.id}" data-val="${t}" ${isComingSoon ? 'disabled' : ''}>${t}</button>`
             ).join('');
 
-            // Generate Level dari pengaturan harga di dalam setiap kategori
             const levelsHtml = category.toppingLevels.map((lvl, idx) => `
                 <label class="level-label ${isComingSoon ? 'disabled' : ''}">
                     <input type="radio" name="level-${item.id}" value="${lvl.id}" data-price="${lvl.price}" data-name="${lvl.name}" ${idx === 0 ? 'checked' : ''} ${isComingSoon ? 'disabled' : ''}>
@@ -50,7 +74,6 @@ function renderMenu() {
                 </label>
             `).join('');
 
-            // Tentukan bentuk tombol (Bisa dibeli atau Coming Soon)
             let buttonHtml = '';
             if (isComingSoon) {
                 buttonHtml = `<button class="btn-disabled" style="margin-top: 1.5rem;" disabled>Coming Soon</button>`;
@@ -64,8 +87,9 @@ function renderMenu() {
                 </button>`;
             }
 
+            // Error Fallback Handler untuk Gambar Lokal
             card.innerHTML = `
-                <img src="${item.img}" alt="${item.name}" loading="lazy">
+                <img src="${item.img}" alt="${item.name}" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=400&q=80';">
                 <div class="card-content">
                     <h3 class="card-title">${item.name}</h3>
                     
@@ -91,11 +115,11 @@ function renderMenu() {
     attachCartButtonListeners();
 }
 
-// 2. Logika Topping Maks 2
+// 3. Logika Topping Maks 2
 function attachToppingListeners() {
     document.querySelectorAll('.topping-btn').forEach(btn => {
         btn.addEventListener('click', function() {
-            if (this.disabled) return; // Proteksi tambahan
+            if (this.disabled) return;
 
             const cardId = this.getAttribute('data-id');
             const val = this.getAttribute('data-val');
@@ -119,7 +143,7 @@ function attachToppingListeners() {
     });
 }
 
-// 3. Listener Tombol Masukkan Keranjang
+// 4. Listener Tombol Tambah Keranjang
 function attachCartButtonListeners() {
     document.querySelectorAll('.btn-add-cart').forEach(btn => {
         btn.addEventListener('click', function() {
@@ -133,7 +157,7 @@ function attachCartButtonListeners() {
     });
 }
 
-// 4. Logika Keranjang
+// 5. Logika Keranjang Utama
 function addToCart(id, name, basePrice, categoryName) {
     const selectedToppings = [...toppingState[id]]; 
     const levelRadio = document.querySelector(`input[name="level-${id}"]:checked`);
@@ -218,7 +242,7 @@ function showToast(msg) {
     setTimeout(() => toastEl.classList.remove('show'), 2500);
 }
 
-// 5. UI Toggles & Modals
+// 6. UI Toggles & Validasi Checkout
 document.getElementById('cart-toggle').onclick = () => { cartSidebar.classList.add('open'); overlay.classList.add('show'); };
 document.getElementById('btn-selesai').onclick = () => { cartSidebar.classList.add('open'); overlay.classList.add('show'); };
 
@@ -226,16 +250,13 @@ const closeCartFunc = () => { cartSidebar.classList.remove('open'); overlay.clas
 document.getElementById('close-cart').onclick = closeCartFunc;
 overlay.onclick = () => { closeCartFunc(); checkoutModal.classList.remove('open'); };
 
-// VALIDASI CEKOUT (MINIMAL ORDER 3000)
 document.getElementById('btn-checkout-modal').onclick = () => {
     if (cart.length === 0) return alert("Keranjang masih kosong!");
     
-    // Menghitung jumlah donat berharga 3.000 yang ada di keranjang
     const qtyDonut3000 = cart
         .filter(item => item.basePrice === 3000)
         .reduce((sum, item) => sum + item.qty, 0);
         
-    // Jika ada donat harga 3000 di keranjang tapi total qty-nya KURANG DARI 3
     if (qtyDonut3000 > 0 && qtyDonut3000 < 3) {
         return alert("Peringatan: Minimal pembelian untuk varian Regular Donut's (Rp 3.000) adalah 3 pcs!\nSilakan tambah pesanan Regular Anda.");
     }
@@ -269,7 +290,7 @@ document.getElementById('delivery-option').addEventListener('change', function()
     }
 });
 
-// 6. Checkout Submit ke WhatsApp
+// 7. Form Submit ke WhatsApp
 document.getElementById('form-checkout').addEventListener('submit', function(e) {
     e.preventDefault();
     
@@ -319,5 +340,6 @@ ${notes}
     window.open(waUrl, '_blank');
 });
 
-// Start Render
+// Start Applications
 renderMenu();
+startCountdown();
