@@ -4,18 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>De'Royale Donuts</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@600;700;italic&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
         <div class="header-content">
-            <h1>De'Royale Donuts</h1>
+            <!-- Penambahan Slogan -->
+            <div class="brand-title">
+                <h1>De'Royale Donuts</h1>
+                <p class="slogan">Royale in Every Bite</p>
+            </div>
             <button id="cart-toggle" class="btn-gold-outline">🛒 Keranjang (<span id="cart-count">0</span>)</button>
         </div>
     </header>
 
     <main>
+        <!-- Fitur Countdown -->
+        <div class="countdown-section">
+            <h2>Nantikan Grand Opening De'Royale Donut</h2>
+            <div id="countdown" class="countdown-timer">
+                <!-- Angka hitung mundur akan dimunculkan oleh JS -->
+            </div>
+        </div>
+
         <div id="menu-container"></div>
         <div class="finish-section">
             <button id="btn-selesai" class="btn-gold large">Selesai Memilih</button>
@@ -55,13 +67,11 @@
                     </select>
                 </div>
 
-                <!-- Bagian Tanggal selalu tampil -->
                 <div class="form-group" id="pickup-date-group">
                     <label id="date-label">Tanggal Pengambilan *</label>
                     <input type="date" id="pickup-date" required>
                 </div>
 
-                <!-- Bagian Alamat dan Link Maps -->
                 <div class="form-group" id="address-group" style="display: none;">
                     <label>Alamat Lengkap & Patokan *</label>
                     <textarea id="address" rows="3" placeholder="Jalan, No Rumah, RT/RW, Patokan..."></textarea>
@@ -88,7 +98,6 @@
         </div>
     </div>
 
-    <!-- Toast Notification -->
     <div id="toast"></div>
 
     <script src="config.js"></script>
