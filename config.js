@@ -5,13 +5,13 @@ const defaultToppings = ["Keju", "Meses", "Kacang", "Crumble", "Marsh"];
 
 // Daftar 7 Varian Rasa Utama
 const baseFlavors = [
-    { name: "Coklat", img: "images/coklat.jpeg", toppings: defaultToppings },
-    { name: "Matcha", img: "images/matcha.jpeg", toppings: defaultToppings },
-    { name: "Strawberry", img: "images/strawberry.jpeg", toppings: defaultToppings },
-    { name: "Tiramisu", img: "images/tiramisu.jpeg", toppings: defaultToppings },
-    { name: "Red Velvet", img: "images/red valvet.jpeg", toppings: defaultToppings },
-    { name: "Kacang", img: "images/kacang.jpeg", toppings: defaultToppings },
-    { name: "Taro", img: "images/taro.jpeg", toppings: defaultToppings }
+    { name: "Coklat", img: "https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=400&q=80", toppings: defaultToppings },
+    { name: "Matcha", img: "https://images.unsplash.com/photo-1588643806968-3e4bce584749?auto=format&fit=crop&w=400&q=80", toppings: defaultToppings },
+    { name: "Strawberry", img: "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?auto=format&fit=crop&w=400&q=80", toppings: defaultToppings },
+    { name: "Tiramisu", img: "https://images.unsplash.com/photo-1627308595229-7830f5c9c66e?auto=format&fit=crop&w=400&q=80", toppings: defaultToppings },
+    { name: "Red Velvet", img: "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=400&q=80", toppings: defaultToppings },
+    { name: "Kacang", img: "https://images.unsplash.com/photo-1636248983944-f875b25f82ac?auto=format&fit=crop&w=400&q=80", toppings: defaultToppings },
+    { name: "Taro", img: "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=400&q=80", toppings: defaultToppings }
 ];
 
 const generateItems = (prefix) => {
@@ -27,7 +27,7 @@ const CONFIG = {
         {
             name: "Regular Donut's",
             price: 3000,
-            status: "available", // Tersedia
+            status: "coming_soon", // SEMUA STATUS SEKARANG COMING SOON
             toppingLevels: [
                 { id: "normal", name: "Normal", price: 0 },
                 { id: "reffine", name: "Reffine", price: 1000 },
@@ -38,22 +38,22 @@ const CONFIG = {
         {
             name: "Medium Donut",
             price: 5000,
-            status: "coming_soon", // Kunci tombol (Coming Soon)
+            status: "coming_soon", // SEMUA STATUS SEKARANG COMING SOON
             toppingLevels: [
                 { id: "normal", name: "Normal", price: 0 },
-                { id: "reffine", name: "Reffine", price: 1000 },
-                { id: "deborant", name: "Deborant", price: 2000 }
+                { id: "reffine", name: "Reffine", price: 1500 }, // HARGA KHUSUS 5000
+                { id: "deborant", name: "Deborant", price: 2500 } // HARGA KHUSUS 5000
             ],
             items: generateItems('med')
         },
         {
             name: "Royale Donut's",
             price: 8000,
-            status: "coming_soon", // Kunci tombol (Coming Soon)
+            status: "coming_soon", // SEMUA STATUS SEKARANG COMING SOON
             toppingLevels: [
                 { id: "normal", name: "Normal", price: 0 },
-                { id: "reffine", name: "Reffine", price: 2000 }, 
-                { id: "deborant", name: "Deborant", price: 3000 } 
+                { id: "reffine", name: "Reffine", price: 2000 }, // HARGA KHUSUS 8000
+                { id: "deborant", name: "Deborant", price: 3000 } // HARGA KHUSUS 8000
             ],
             items: generateItems('roy')
         }
