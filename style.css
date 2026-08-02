@@ -15,15 +15,46 @@
 body { background-color: var(--bg-color); color: var(--text-main); font-family: var(--font-body); line-height: 1.5; }
 h1, h2, h3, h4 { font-family: var(--font-heading); color: var(--gold); }
 
+/* Header & Tagline */
 header { background-color: var(--card-bg); border-bottom: 1px solid var(--border-color); padding: 1rem; position: sticky; top: 0; z-index: 100; }
 .header-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-.header-content h1 { font-size: 1.5rem; }
+.brand-container { display: flex; flex-direction: column; }
+.header-content h1 { font-size: 1.5rem; line-height: 1.1; }
+.tagline { font-family: var(--font-heading); font-style: italic; color: var(--text-muted); font-size: 0.8rem; letter-spacing: 0.5px; margin-top: 2px; }
 
+/* Grand Opening Banner & Countdown Timer */
+.grand-opening-banner {
+    background: linear-gradient(135deg, #1a1a2e 0%, #252542 100%);
+    border: 1px solid var(--gold);
+    border-radius: 12px;
+    padding: 2rem 1rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 20px rgba(201, 168, 76, 0.15);
+}
+.grand-opening-banner h2 { font-size: 1.8rem; letter-spacing: 1px; margin-bottom: 0.3rem; }
+.opening-subtitle { color: var(--text-main); font-weight: 600; font-size: 1.1rem; margin-bottom: 1.5rem; }
+
+.countdown-container { display: flex; justify-content: center; gap: 1rem; }
+.time-box {
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    min-width: 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.time-box span { font-size: 1.5rem; font-weight: 700; color: var(--gold); font-family: var(--font-heading); }
+.time-box label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; margin-top: 2px; }
+
+/* Main Layout & Divider */
 main { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
-
 .price-divider { text-align: center; margin: 3rem 0 1.5rem; border-bottom: 1px solid var(--border-color); line-height: 0.1em; }
 .price-divider span { background: var(--bg-color); padding: 0 15px; color: var(--gold); font-size: 1.5rem; font-family: var(--font-heading); font-weight: 700; }
 
+/* Grid Produk & Cards */
 .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
 @media (max-width: 600px) { .product-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; } }
 
@@ -34,6 +65,7 @@ main { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
 .card-title { font-size: 1.25rem; margin-bottom: 0.5rem; }
 .card-section-title { font-size: 0.85rem; color: var(--text-muted); margin: 0.75rem 0 0.4rem; text-transform: uppercase; letter-spacing: 1px; }
 
+/* Options Styling */
 .toppings-group { display: flex; flex-wrap: wrap; gap: 0.4rem; }
 .topping-btn { background: transparent; border: 1px solid var(--border-color); color: var(--text-muted); padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; transition: 0.2s; }
 .topping-btn.selected { background: var(--gold); color: var(--bg-color); border-color: var(--gold); font-weight: 600; }
@@ -51,7 +83,7 @@ main { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
 .btn-gold-outline:hover { background: var(--gold); color: var(--bg-color); }
 .full-width { width: 100%; margin-top: auto; }
 .mt-10 { margin-top: 10px; }
-.btn-disabled { background: #333; color: #888; border: 1px solid #444; padding: 0.6rem 1.2rem; border-radius: 6px; font-weight: 600; cursor: not-allowed; font-family: var(--font-body); width: 100%; margin-top: auto; }
+.btn-disabled { background: #232338; color: #73738c; border: 1px solid #33334d; padding: 0.6rem 1.2rem; border-radius: 6px; font-weight: 600; cursor: not-allowed; font-family: var(--font-body); width: 100%; margin-top: auto; }
 
 .finish-section { text-align: center; margin-top: 3rem; }
 .large { padding: 1rem 2rem; font-size: 1.1rem; }
