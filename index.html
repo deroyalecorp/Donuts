@@ -18,6 +18,7 @@
             --font-heading: 'Playfair Display', serif;
             --font-body: 'Inter', sans-serif;
             --shadow-gold: 0 0 30px rgba(201, 168, 76, 0.25);
+            --discount-color: #ff6b8a;
         }
         * {
             margin: 0;
@@ -152,182 +153,192 @@
             padding: 0 1rem;
         }
 
-        /* ===== GRAND OPENING BANNER ===== */
+        /* ===== GRAND OPENING BANNER — NEW STYLE ===== */
         .grand-opening-banner {
-            background: linear-gradient(135deg, #1a1a2e 0%, #252542 100%);
+            background: linear-gradient(145deg, #1a1a2e 0%, #2a1f3d 50%, #1a1a2e 100%);
             border: 1px solid var(--gold);
-            border-radius: 16px;
-            padding: 2rem 1rem;
+            border-radius: 20px;
+            padding: 2.5rem 1.5rem;
             text-align: center;
-            margin-bottom: 2rem;
-            box-shadow: 0 8px 40px rgba(201, 168, 76, 0.12);
+            margin-bottom: 2.5rem;
+            box-shadow: 0 8px 50px rgba(201, 168, 76, 0.12), inset 0 1px 0 rgba(201, 168, 76, 0.1);
             position: relative;
             overflow: hidden;
         }
         .grand-opening-banner::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
+            top: -60%;
+            left: -30%;
+            width: 160%;
             height: 200%;
-            background: radial-gradient(circle at 30% 50%, rgba(201, 168, 76, 0.05) 0%, transparent 60%);
+            background: radial-gradient(ellipse at 30% 40%, rgba(201, 168, 76, 0.06) 0%, transparent 60%);
             pointer-events: none;
+            animation: bannerGlow 8s ease-in-out infinite alternate;
+        }
+        @keyframes bannerGlow {
+            0% {
+                transform: translateX(-10%) scale(1);
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateX(10%) scale(1.2);
+                opacity: 1;
+            }
+        }
+
+        .grand-opening-banner .opening-badge {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--bg-color);
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 0.3rem 1.2rem;
+            border-radius: 50px;
+            margin-bottom: 0.8rem;
+            position: relative;
+            box-shadow: 0 0 30px rgba(201, 168, 76, 0.3);
         }
         .grand-opening-banner h2 {
-            font-size: 1.8rem;
-            letter-spacing: 1px;
+            font-size: 2.6rem;
+            letter-spacing: 2px;
             margin-bottom: 0.3rem;
             position: relative;
+            text-shadow: 0 0 60px rgba(201, 168, 76, 0.15);
+            background: linear-gradient(135deg, #f5e6a3 0%, #c9a84c 40%, #f5e6a3 70%, #c9a84c 100%);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmerText 4s ease-in-out infinite;
         }
-        .opening-subtitle {
-            color: var(--text-main);
-            font-weight: 600;
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
-            position: relative;
-        }
-
-        /* ===== COUNTDOWN - DRAMATIC ===== */
-        .countdown-container {
-            display: flex;
-            justify-content: center;
-            gap: 1.2rem;
-            position: relative;
-            flex-wrap: wrap;
-            perspective: 800px;
-        }
-        .time-box {
-            background: var(--bg-color);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 0.6rem 1rem 0.5rem;
-            min-width: 80px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transition: border-color 0.3s, box-shadow 0.3s;
-            position: relative;
-            overflow: visible;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-        }
-        .time-box:hover {
-            border-color: var(--gold);
-            box-shadow: 0 0 40px rgba(201, 168, 76, 0.08);
-        }
-        .time-box .digit-wrap {
-            position: relative;
-            display: inline-block;
-            min-width: 44px;
-            text-align: center;
-        }
-        .time-box .digit {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: var(--gold);
-            font-family: var(--font-heading);
-            display: inline-block;
-            transition: none;
-            position: relative;
-            will-change: transform, opacity;
-            letter-spacing: 1px;
-            line-height: 1.2;
-            text-shadow: 0 0 20px rgba(201, 168, 76, 0.15);
-        }
-        .time-box .digit.exploding {
-            animation: digitExplode 0.5s ease-out forwards;
-        }
-        .time-box .digit.appearing {
-            animation: digitAppear 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-        }
-        .time-box label {
-            font-size: 0.65rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            margin-top: 2px;
-            letter-spacing: 1px;
-            font-weight: 600;
-        }
-
-        /* Explode animation: scale up + fade out + rotate */
-        @keyframes digitExplode {
+        @keyframes shimmerText {
             0% {
-                transform: scale(1) rotate(0deg);
-                opacity: 1;
-                text-shadow: 0 0 20px rgba(201, 168, 76, 0.3);
-            }
-            30% {
-                transform: scale(1.6) rotate(8deg);
-                opacity: 1;
-                text-shadow: 0 0 60px rgba(201, 168, 76, 0.8);
-            }
-            100% {
-                transform: scale(2.4) rotate(20deg) translateY(-20px);
-                opacity: 0;
-                text-shadow: 0 0 80px rgba(201, 168, 76, 0);
-            }
-        }
-
-        /* Appear animation: pop in from small + glow */
-        @keyframes digitAppear {
-            0% {
-                transform: scale(0) rotate(-12deg);
-                opacity: 0;
-                text-shadow: 0 0 0 rgba(201, 168, 76, 0);
+                background-position: 0% 50%;
             }
             50% {
-                transform: scale(1.3) rotate(2deg);
-                opacity: 1;
-                text-shadow: 0 0 60px rgba(201, 168, 76, 0.9);
-            }
-            70% {
-                transform: scale(0.95) rotate(-1deg);
-                text-shadow: 0 0 40px rgba(201, 168, 76, 0.5);
+                background-position: 100% 50%;
             }
             100% {
-                transform: scale(1) rotate(0deg);
-                opacity: 1;
-                text-shadow: 0 0 20px rgba(201, 168, 76, 0.15);
+                background-position: 0% 50%;
             }
+        }
+        .grand-opening-banner .opening-subtitle {
+            color: var(--text-main);
+            font-weight: 400;
+            font-size: 1.2rem;
+            margin-bottom: 0.6rem;
+            position: relative;
+            letter-spacing: 0.5px;
+        }
+        .grand-opening-banner .opening-subtitle strong {
+            color: var(--gold);
+            font-weight: 700;
         }
 
-        /* ===== COUNTDOWN PARTICLES (Golden Shards) ===== */
-        .shard {
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            border-radius: 2px;
-            animation: shardFall 1.2s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
-            will-change: transform, opacity;
+        /* Limited stock badge with pulse */
+        .limited-stock-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 107, 138, 0.12);
+            border: 1px solid var(--discount-color);
+            border-radius: 50px;
+            padding: 0.4rem 1.4rem;
+            margin-top: 0.8rem;
+            position: relative;
+            animation: pulseBadge 2s ease-in-out infinite;
         }
-        @keyframes shardFall {
-            0% {
-                opacity: 1;
-                transform: translate(0, 0) rotate(0deg) scale(1);
-            }
-            100% {
-                opacity: 0;
-                transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(0.2);
-            }
-        }
-
-        /* Gold glow ring on appear */
-        .digit-glow-ring {
-            position: fixed;
-            pointer-events: none;
+        .limited-stock-badge .pulse-dot {
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(201, 168, 76, 0.4) 0%, transparent 70%);
-            z-index: 9998;
-            animation: glowRingExpand 0.7s ease-out forwards;
+            background: var(--discount-color);
+            animation: dotPulse 1.5s ease-in-out infinite;
         }
-        @keyframes glowRingExpand {
-            0% {
-                transform: translate(-50%, -50%) scale(0);
+        .limited-stock-badge span {
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+        }
+        .limited-stock-badge span.highlight {
+            color: var(--discount-color);
+            font-weight: 700;
+        }
+        @keyframes pulseBadge {
+            0%,
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 20px rgba(255, 107, 138, 0.1);
+            }
+            50% {
+                transform: scale(1.02);
+                box-shadow: 0 0 40px rgba(255, 107, 138, 0.2);
+            }
+        }
+        @keyframes dotPulse {
+            0%,
+            100% {
+                transform: scale(1);
                 opacity: 1;
             }
+            50% {
+                transform: scale(1.6);
+                opacity: 0.5;
+            }
+        }
+
+        /* Floating gold particles (decorative) */
+        .floating-particle {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--gold);
+            opacity: 0.15;
+            pointer-events: none;
+            animation: floatParticle 12s ease-in-out infinite alternate;
+        }
+        .floating-particle:nth-child(1) {
+            width: 8px;
+            height: 8px;
+            top: 15%;
+            left: 8%;
+            animation-duration: 14s;
+            animation-delay: -2s;
+        }
+        .floating-particle:nth-child(2) {
+            width: 12px;
+            height: 12px;
+            top: 70%;
+            right: 12%;
+            animation-duration: 18s;
+            animation-delay: -5s;
+        }
+        .floating-particle:nth-child(3) {
+            width: 6px;
+            height: 6px;
+            top: 30%;
+            right: 25%;
+            animation-duration: 10s;
+            animation-delay: -8s;
+        }
+        .floating-particle:nth-child(4) {
+            width: 10px;
+            height: 10px;
+            bottom: 20%;
+            left: 20%;
+            animation-duration: 16s;
+            animation-delay: -3s;
+        }
+        @keyframes floatParticle {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.08;
+            }
             100% {
-                transform: translate(-50%, -50%) scale(4);
-                opacity: 0;
+                transform: translate(40px, -30px) scale(1.6);
+                opacity: 0.2;
             }
         }
 
@@ -476,7 +487,6 @@
             object-fit: cover;
             transition: transform 0.6s ease;
             display: block;
-            filter: grayscale(70%) brightness(0.5);
         }
         .card:hover img {
             transform: scale(1.03);
@@ -676,30 +686,6 @@
         }
         .mt-10 {
             margin-top: 10px;
-        }
-
-        /* ===== COMING SOON OVERLAY STYLING ===== */
-        .coming-soon-tag {
-            display: inline-block;
-            background: rgba(201, 168, 76, 0.15);
-            color: var(--gold);
-            border: 1px solid var(--gold);
-            padding: 0.25rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 0.8rem;
-            animation: pulseTag 2s infinite;
-        }
-        @keyframes pulseTag {
-            0%, 100% {
-                opacity: 0.7;
-            }
-            50% {
-                opacity: 1;
-            }
         }
 
         /* ===== FINISH SECTION ===== */
@@ -927,6 +913,61 @@
             resize: vertical;
         }
 
+        /* Voucher styling */
+        .voucher-group {
+            display: flex;
+            gap: 0.6rem;
+            align-items: stretch;
+        }
+        .voucher-group input {
+            flex: 1;
+        }
+        .voucher-group button {
+            padding: 0.7rem 1.2rem;
+            white-space: nowrap;
+            border-radius: 10px;
+            border: none;
+            background: var(--gold);
+            color: var(--bg-color);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: var(--font-body);
+        }
+        .voucher-group button:hover {
+            background: var(--gold-hover);
+            transform: scale(1.03);
+        }
+        .voucher-group button:active {
+            transform: scale(0.95);
+        }
+        .voucher-group button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .voucher-status {
+            font-size: 0.85rem;
+            margin-top: 4px;
+            font-weight: 600;
+        }
+        .voucher-status.success {
+            color: #2ecc71;
+        }
+        .voucher-status.error {
+            color: #ff6b7a;
+        }
+
+        .discount-badge {
+            display: inline-block;
+            background: var(--discount-color);
+            color: #fff;
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-left: 6px;
+        }
+
         /* ===== TOAST ===== */
         #toast {
             position: fixed;
@@ -1012,22 +1053,20 @@
                 font-size: 0.8rem;
             }
             .grand-opening-banner h2 {
-                font-size: 1.4rem;
+                font-size: 1.8rem;
             }
-            .time-box {
-                min-width: 60px;
-                padding: 0.4rem 0.6rem;
-            }
-            .time-box .digit {
-                font-size: 1.6rem;
-                min-width: 32px;
-            }
-            .countdown-container {
-                gap: 0.6rem;
+            .grand-opening-banner {
+                padding: 1.8rem 1rem;
             }
             .modal {
                 padding: 1.5rem;
                 width: 95%;
+            }
+            .voucher-group {
+                flex-wrap: wrap;
+            }
+            .voucher-group button {
+                width: 100%;
             }
         }
         @media (max-width: 480px) {
@@ -1042,16 +1081,14 @@
             .category-filter {
                 gap: 0.4rem;
             }
-            .time-box {
-                min-width: 48px;
-                padding: 0.3rem 0.4rem;
+            .grand-opening-banner h2 {
+                font-size: 1.4rem;
             }
-            .time-box .digit {
-                font-size: 1.2rem;
-                min-width: 26px;
+            .grand-opening-banner .opening-subtitle {
+                font-size: 1rem;
             }
-            .countdown-container {
-                gap: 0.4rem;
+            .limited-stock-badge span {
+                font-size: 0.8rem;
             }
         }
     </style>
@@ -1076,27 +1113,34 @@
     <!-- ===== MAIN ===== -->
     <main>
 
-        <!-- Grand Opening Banner -->
+        <!-- ===== GRAND OPENING BANNER — NEW ===== -->
         <section class="grand-opening-banner">
-            <h2>Save the date!</h2>
-            <p class="opening-subtitle">Grand Opening De'Royale Donuts 7 Agustus 2026</p>
-            <div id="countdown" class="countdown-container">
-                <div class="time-box">
-                    <div class="digit-wrap"><span id="days" class="digit">00</span></div>
-                    <label>Hari</label>
-                </div>
-                <div class="time-box">
-                    <div class="digit-wrap"><span id="hours" class="digit">00</span></div>
-                    <label>Jam</label>
-                </div>
-                <div class="time-box">
-                    <div class="digit-wrap"><span id="minutes" class="digit">00</span></div>
-                    <label>Menit</label>
-                </div>
-                <div class="time-box">
-                    <div class="digit-wrap"><span id="seconds" class="digit">00</span></div>
-                    <label>Detik</label>
-                </div>
+            <!-- Decorative floating particles -->
+            <div class="floating-particle"></div>
+            <div class="floating-particle"></div>
+            <div class="floating-particle"></div>
+            <div class="floating-particle"></div>
+
+            <div class="opening-badge">✨ GRAND OPENING ✨</div>
+            <h2>De'Royale Donuts</h2>
+            <p class="opening-subtitle">
+                <strong>First Day — 7 Agustus 2026</strong><br />
+                Rasakan kemewahan donut premium dengan cita rasa yang tak terlupakan.
+            </p>
+            <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 500px; margin: 0.2rem auto 0.8rem; line-height: 1.6; font-weight: 300;">
+                Setiap gigitan adalah perjalanan kelezatan — dibuat dari bahan pilihan,
+                dengan sentuhan royal di setiap lapisan.
+            </p>
+
+            <!-- Limited Stock Badge -->
+            <div class="limited-stock-badge">
+                <span class="pulse-dot"></span>
+                <span>
+                    <span class="highlight">⚡ Stok Terbatas</span> — Hanya untuk hari pertama!
+                    <span style="font-weight: 300; color: var(--text-muted); font-size: 0.85rem; margin-left: 4px;">
+                        (Jangan sampai kehabisan)
+                    </span>
+                </span>
             </div>
         </section>
 
@@ -1155,6 +1199,20 @@
                     <label style="margin-top:10px;">Link Share Lokasi (Maps)</label>
                     <input type="url" id="maps-link" placeholder="Cth: https://maps.app.goo.gl/..." />
                 </div>
+
+                <!-- ===== VOUCHER SECTION ===== -->
+                <div class="form-group">
+                    <label>Kode Voucher (Diskon 16.67% untuk Regular Donut's)</label>
+                    <div class="voucher-group">
+                        <input type="text" id="voucher-input" placeholder="Masukkan kode voucher" maxlength="20" />
+                        <button type="button" id="btn-apply-voucher">Terapkan</button>
+                    </div>
+                    <div id="voucher-status" class="voucher-status"></div>
+                    <div style="font-size:0.7rem;color:var(--text-muted);margin-top:4px;">
+                        Kode yang tersedia: DONUT78, REGULER7, LAUNCH78, BARU0708, DONAT26
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label>Metode Pembayaran</label>
                     <select id="payment-method" required>
@@ -1166,6 +1224,23 @@
                     <label>Catatan Tambahan (Opsional)</label>
                     <textarea id="notes" rows="2" placeholder="Cth: Pisahkan gulanya..."></textarea>
                 </div>
+
+                <!-- Total with discount display -->
+                <div id="order-summary" style="background:var(--bg-color);border-radius:10px;padding:0.8rem 1rem;margin:1rem 0;border:1px solid var(--border-color);">
+                    <div style="display:flex;justify-content:space-between;font-weight:600;">
+                        <span>Subtotal</span>
+                        <span id="subtotal-display">Rp 0</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;font-weight:600;color:var(--discount-color);">
+                        <span>Diskon Voucher <span id="voucher-name-display" style="font-weight:400;color:var(--text-muted);font-size:0.8rem;"></span></span>
+                        <span id="discount-display">- Rp 0</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;font-weight:700;font-size:1.1rem;color:var(--gold);border-top:1px solid var(--border-color);padding-top:0.6rem;margin-top:0.4rem;">
+                        <span>Total</span>
+                        <span id="final-total-display">Rp 0</span>
+                    </div>
+                </div>
+
                 <button type="submit" class="btn-gold full-width mt-10">Kirim Pesanan</button>
             </form>
         </div>
@@ -1177,7 +1252,7 @@
     <!-- ===== SCRIPTS ===== -->
     <script>
         // ================================================================
-        //  CONFIG — SEMUA MENU COMING SOON
+        //  CONFIG — Medium Donut "coming_soon"
         // ================================================================
         const defaultToppings = ["Keju", "Meses", "Kacang", "Crumble", "Marsh"];
         const baseFlavors = [
@@ -1190,18 +1265,21 @@
             { name: "Taro", img: "images/taro.jpeg", toppings: defaultToppings }
         ];
         const generateItems = (prefix) => baseFlavors.map((item, index) => ({ ...item, id: `${prefix}-${index+1}` }));
+
         const CONFIG = {
-            whatsappNumber: "6287881413779",
+            whatsappNumber: "085196577630",
             targetOpeningDate: "2026-08-07T00:00:00",
             minPurchase: {
                 "Regular Donut's": 3,
                 "Medium Donut": 2,
                 "Royale Donut's": 1
             },
+            validVouchers: ["DONUT78", "REGULER7", "LAUNCH78", "BARU0708", "DONAT26"],
+            discountRate: 0.1667,
             categories: [{
                 name: "Regular Donut's",
                 price: 3000,
-                status: "coming-soon",
+                status: "available",
                 toppingLevels: [
                     { id: "normal", name: "Normal", price: 0 },
                     { id: "reffine", name: "Reffine", price: 1000 },
@@ -1211,7 +1289,7 @@
             }, {
                 name: "Medium Donut",
                 price: 5000,
-                status: "coming-soon",
+                status: "coming_soon",
                 toppingLevels: [
                     { id: "normal", name: "Normal", price: 0 },
                     { id: "reffine", name: "Reffine", price: 1500 },
@@ -1221,7 +1299,7 @@
             }, {
                 name: "Royale Donut's",
                 price: 8000,
-                status: "coming-soon",
+                status: "available",
                 toppingLevels: [
                     { id: "normal", name: "Normal", price: 0 },
                     { id: "reffine", name: "Reffine", price: 2000 },
@@ -1237,6 +1315,7 @@
         let cart = [];
         let toppingState = {};
         let currentCategoryIndex = 0;
+        let appliedVoucher = null;
 
         // ================================================================
         //  DOM REFS
@@ -1252,114 +1331,18 @@
         const filterContainer = document.getElementById('categoryFilter');
         const filterIndicator = document.getElementById('filterIndicator');
 
+        const voucherInput = document.getElementById('voucher-input');
+        const btnApplyVoucher = document.getElementById('btn-apply-voucher');
+        const voucherStatus = document.getElementById('voucher-status');
+        const subtotalDisplay = document.getElementById('subtotal-display');
+        const discountDisplay = document.getElementById('discount-display');
+        const finalTotalDisplay = document.getElementById('final-total-display');
+        const voucherNameDisplay = document.getElementById('voucher-name-display');
+
         const formatRp = (num) => 'Rp ' + num.toLocaleString('id-ID');
 
         // ================================================================
-        //  COUNTDOWN — DRAMATIC ANIMATION
-        // ================================================================
-        let prevValues = { days: '', hours: '', minutes: '', seconds: '' };
-
-        function animateDigit(element, newValue, label) {
-            const oldText = element.textContent;
-            if (oldText === newValue) return;
-
-            const rect = element.getBoundingClientRect();
-            const cx = rect.left + rect.width / 2;
-            const cy = rect.top + rect.height / 2;
-
-            // 1. EXPLODE: shatter the digit into golden shards
-            const numShards = 40 + Math.floor(Math.random() * 25);
-            for (let i = 0; i < numShards; i++) {
-                const shard = document.createElement('div');
-                shard.className = 'shard';
-                const size = 4 + Math.random() * 10;
-                const isRound = Math.random() > 0.6;
-                shard.style.width = isRound ? size + 'px' : size * 0.3 + 'px';
-                shard.style.height = isRound ? size + 'px' : size * 1.2 + 'px';
-                shard.style.borderRadius = isRound ? '50%' : '2px';
-                const goldShade = 160 + Math.floor(Math.random() * 80);
-                shard.style.background = `rgb(${goldShade + 40}, ${goldShade - 20}, ${Math.floor(goldShade * 0.5)})`;
-                shard.style.boxShadow = '0 0 6px rgba(201,168,76,0.6)';
-                const angle = Math.random() * 2 * Math.PI;
-                const speed = 60 + Math.random() * 180;
-                const tx = Math.cos(angle) * speed * (0.6 + Math.random() * 0.6);
-                const ty = Math.sin(angle) * speed * (0.6 + Math.random() * 0.6) + 80 + Math.random() * 60;
-                shard.style.setProperty('--tx', tx + 'px');
-                shard.style.setProperty('--ty', ty + 'px');
-                shard.style.setProperty('--rot', (Math.random() * 720 - 360) + 'deg');
-                shard.style.left = (cx + (Math.random() - 0.5) * 20) + 'px';
-                shard.style.top = (cy + (Math.random() - 0.5) * 20) + 'px';
-                shard.style.animationDuration = (0.8 + Math.random() * 0.6) + 's';
-                document.body.appendChild(shard);
-                setTimeout(() => shard.remove(), 1600);
-            }
-
-            // 2. Glow ring burst
-            const ring = document.createElement('div');
-            ring.className = 'digit-glow-ring';
-            ring.style.left = cx + 'px';
-            ring.style.top = cy + 'px';
-            ring.style.width = '10px';
-            ring.style.height = '10px';
-            ring.style.animationDuration = '0.7s';
-            document.body.appendChild(ring);
-            setTimeout(() => ring.remove(), 800);
-
-            // 3. Animate the digit itself: explode
-            element.classList.remove('exploding', 'appearing');
-            void element.offsetWidth;
-            element.classList.add('exploding');
-
-            // 4. After explosion, set new value and appear
-            setTimeout(() => {
-                element.textContent = newValue;
-                element.classList.remove('exploding');
-                void element.offsetWidth;
-                element.classList.add('appearing');
-                setTimeout(() => {
-                    element.classList.remove('appearing');
-                }, 700);
-            }, 400);
-        }
-
-        function startCountdown() {
-            const target = new Date(CONFIG.targetOpeningDate).getTime();
-
-            const timer = setInterval(() => {
-                const now = Date.now();
-                const diff = target - now;
-
-                if (diff < 0) {
-                    clearInterval(timer);
-                    document.getElementById('countdown').innerHTML =
-                        "<h3 style='color:var(--gold);'>🎉 WE ARE OPEN NOW! 🎉</h3>";
-                    return;
-                }
-
-                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                const s = Math.floor((diff % (1000 * 60)) / 1000);
-
-                const daysStr = String(d).padStart(2, '0');
-                const hoursStr = String(h).padStart(2, '0');
-                const minutesStr = String(m).padStart(2, '0');
-                const secondsStr = String(s).padStart(2, '0');
-
-                const daysEl = document.getElementById('days');
-                const hoursEl = document.getElementById('hours');
-                const minutesEl = document.getElementById('minutes');
-                const secondsEl = document.getElementById('seconds');
-
-                animateDigit(daysEl, daysStr, 'Hari');
-                animateDigit(hoursEl, hoursStr, 'Jam');
-                animateDigit(minutesEl, minutesStr, 'Menit');
-                animateDigit(secondsEl, secondsStr, 'Detik');
-            }, 1000);
-        }
-
-        // ================================================================
-        //  PARTICLES (Sprinkles for category clicks)
+        //  PARTICLES (Sprinkles)
         // ================================================================
         const sprinkleColors = [
             '#c9a84c', '#e8c86a', '#ff6b8a', '#8bc34a', '#b22222',
@@ -1559,7 +1542,7 @@
 
                 let buttonHtml = '';
                 if (!isAvailable) {
-                    buttonHtml = `<button class="btn-disabled" disabled>🔒 Coming Soon</button>`;
+                    buttonHtml = `<button class="btn-disabled" disabled>Coming Soon</button>`;
                 } else {
                     buttonHtml =
                         `<button class="btn-gold full-width btn-add-cart" data-id="${item.id}" data-name="${item.name}" data-price="${category.price}" data-category="${category.name}">+ Keranjang</button>`;
@@ -1569,7 +1552,6 @@
                 card.innerHTML = `
               <img src="${imgSrc}" alt="${item.name}" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=400&q=80';">
               <div class="card-content">
-                <span class="coming-soon-tag">🔜 Segera Hadir</span>
                 <h3 class="card-title">${item.name}</h3>
                 <div class="card-category">${category.name}</div>
                 <div class="card-section-title">Pilih Topping (Maks 2)</div>
@@ -1674,6 +1656,7 @@
                     qty: 1
                 });
             }
+            appliedVoucher = null;
             updateCartUI();
             showToast(`✨ ${name} ditambahkan!`);
         }
@@ -1714,6 +1697,7 @@
 
             cartCount.innerText = count;
             totalPriceEl.innerText = formatRp(total);
+            updateOrderSummary();
         }
 
         window.updateQty = function(cartItemId, delta) {
@@ -1723,12 +1707,14 @@
                 if (item.qty <= 0) {
                     cart = cart.filter(i => i.cartItemId !== cartItemId);
                 }
+                appliedVoucher = null;
                 updateCartUI();
             }
         };
 
         window.removeFromCart = function(cartItemId) {
             cart = cart.filter(i => i.cartItemId !== cartItemId);
+            appliedVoucher = null;
             updateCartUI();
         };
 
@@ -1738,6 +1724,111 @@
             clearTimeout(toastEl._timer);
             toastEl._timer = setTimeout(() => toastEl.classList.remove('show'), 2600);
         }
+
+        // ================================================================
+        //  VOUCHER LOGIC
+        // ================================================================
+        function getSubtotal() {
+            let subtotal = 0;
+            cart.forEach(item => {
+                subtotal += (item.basePrice + item.levelPrice) * item.qty;
+            });
+            return subtotal;
+        }
+
+        function getRegularSubtotal() {
+            let subtotal = 0;
+            cart.forEach(item => {
+                if (item.categoryName === "Regular Donut's") {
+                    subtotal += (item.basePrice + item.levelPrice) * item.qty;
+                }
+            });
+            return subtotal;
+        }
+
+        function applyVoucher(code) {
+            const upperCode = code.toUpperCase().trim();
+            if (!CONFIG.validVouchers.includes(upperCode)) {
+                voucherStatus.className = 'voucher-status error';
+                voucherStatus.textContent = '❌ Kode voucher tidak valid';
+                appliedVoucher = null;
+                updateOrderSummary();
+                return false;
+            }
+
+            const regularSubtotal = getRegularSubtotal();
+            if (regularSubtotal === 0) {
+                voucherStatus.className = 'voucher-status error';
+                voucherStatus.textContent = '❌ Voucher hanya berlaku untuk produk Regular Donut\'s (tidak ada di keranjang)';
+                appliedVoucher = null;
+                updateOrderSummary();
+                return false;
+            }
+
+            const discountAmount = Math.round(regularSubtotal * CONFIG.discountRate);
+            appliedVoucher = {
+                code: upperCode,
+                discountAmount: discountAmount,
+                regularSubtotal: regularSubtotal
+            };
+
+            voucherStatus.className = 'voucher-status success';
+            voucherStatus.textContent = `✅ Voucher ${upperCode} diterapkan! Potongan ${formatRp(discountAmount)} (16.67%) untuk Regular Donut's`;
+            updateOrderSummary();
+            return true;
+        }
+
+        function updateOrderSummary() {
+            const subtotal = getSubtotal();
+            const regularSubtotal = getRegularSubtotal();
+            let discount = 0;
+            let voucherName = '';
+
+            if (appliedVoucher) {
+                const newRegularSubtotal = getRegularSubtotal();
+                if (newRegularSubtotal === 0) {
+                    appliedVoucher = null;
+                    voucherStatus.className = 'voucher-status error';
+                    voucherStatus.textContent = '❌ Voucher batal: tidak ada produk Regular Donut\'s';
+                } else {
+                    discount = Math.round(newRegularSubtotal * CONFIG.discountRate);
+                    appliedVoucher.discountAmount = discount;
+                    appliedVoucher.regularSubtotal = newRegularSubtotal;
+                    voucherName = appliedVoucher.code;
+                    voucherStatus.className = 'voucher-status success';
+                    voucherStatus.textContent = `✅ Voucher ${appliedVoucher.code} diterapkan! Potongan ${formatRp(discount)} (16.67%) untuk Regular Donut's`;
+                }
+            }
+
+            const finalTotal = subtotal - discount;
+
+            subtotalDisplay.textContent = formatRp(subtotal);
+            if (discount > 0) {
+                discountDisplay.textContent = `- ${formatRp(discount)}`;
+                voucherNameDisplay.textContent = `(${voucherName})`;
+            } else {
+                discountDisplay.textContent = 'Rp 0';
+                voucherNameDisplay.textContent = '';
+            }
+            finalTotalDisplay.textContent = formatRp(finalTotal);
+        }
+
+        btnApplyVoucher.addEventListener('click', function() {
+            const code = voucherInput.value.trim();
+            if (!code) {
+                voucherStatus.className = 'voucher-status error';
+                voucherStatus.textContent = '❌ Masukkan kode voucher terlebih dahulu';
+                return;
+            }
+            applyVoucher(code);
+        });
+
+        voucherInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                btnApplyVoucher.click();
+            }
+        });
 
         // ================================================================
         //  UI TOGGLES
@@ -1762,7 +1853,7 @@
         };
 
         // ================================================================
-        //  CHECKOUT MODAL — with MIN PURCHASE validation
+        //  CHECKOUT MODAL
         // ================================================================
         document.getElementById('btn-checkout-modal').onclick = () => {
             if (cart.length === 0) {
@@ -1772,7 +1863,6 @@
 
             const minPurchase = CONFIG.minPurchase || {};
             const categoryQty = {};
-
             cart.forEach(item => {
                 const catName = item.categoryName;
                 if (!categoryQty[catName]) categoryQty[catName] = 0;
@@ -1791,6 +1881,11 @@
                 alert(`⚠️ Minimal pembelian tidak terpenuhi:\n${violationMsg}\nSilakan tambah pesanan Anda.`);
                 return;
             }
+
+            voucherStatus.textContent = '';
+            voucherInput.value = '';
+            appliedVoucher = null;
+            updateOrderSummary();
 
             closeCart();
             checkoutModal.classList.add('open');
@@ -1833,10 +1928,12 @@
             const payment = document.getElementById('payment-method').value;
             const notes = document.getElementById('notes').value.trim() || '-';
 
-            let grandTotal = 0;
+            const subtotal = getSubtotal();
+            const discount = appliedVoucher ? appliedVoucher.discountAmount : 0;
+            const grandTotal = subtotal - discount;
+
             const orderLines = cart.map((item, idx) => {
                 const itemTotal = (item.basePrice + item.levelPrice) * item.qty;
-                grandTotal += itemTotal;
                 return `${idx+1}. ${item.qty}x ${item.name} (${item.categoryName})\n   • Topping: ${item.toppings.length ? item.toppings.join(', ') : 'Tanpa Topping'}\n   • Level: ${item.levelName} (+${formatRp(item.levelPrice)})\n   Subtotal: ${formatRp(itemTotal)}`;
             }).join('\n\n');
 
@@ -1848,8 +1945,13 @@
                 if (mapsLink) deliveryInfo += `\nLink Maps: ${mapsLink}`;
             }
 
+            let voucherInfo = '';
+            if (appliedVoucher) {
+                voucherInfo = `\n*Voucher:* ${appliedVoucher.code} (diskon 16.67% untuk Regular Donut's)\nPotongan: ${formatRp(discount)}`;
+            }
+
             const msg =
-                `*DE'ROYALE DONUTS - PESANAN BARU*\n\n*Data Pemesan:*\nNama: ${name}\nOpsi Pengiriman: ${delivery}\n${deliveryInfo}\nMetode Pembayaran: ${payment}\n\n*Daftar Pesanan:*\n${orderLines}\n\n*Catatan Tambahan:*\n${notes}\n\n*TOTAL PEMBAYARAN: ${formatRp(grandTotal)}*`;
+                `*DE'ROYALE DONUTS - PESANAN BARU*\n\n*Data Pemesan:*\nNama: ${name}\nOpsi Pengiriman: ${delivery}\n${deliveryInfo}\nMetode Pembayaran: ${payment}\n\n*Daftar Pesanan:*\n${orderLines}\n\n*Subtotal:* ${formatRp(subtotal)}${voucherInfo}\n*TOTAL PEMBAYARAN: ${formatRp(grandTotal)}*\n\n*Catatan Tambahan:*\n${notes}`;
 
             const waUrl = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(msg)}`;
             window.open(waUrl, '_blank');
@@ -1860,13 +1962,12 @@
         // ================================================================
         renderFilterButtons();
         renderMenu(false);
-        startCountdown();
 
         window.addEventListener('resize', updateIndicator);
         setTimeout(updateIndicator, 300);
         setTimeout(updateIndicator, 800);
 
-        console.log('🍩 De\'Royale Donuts — Royale in Every Bite (Coming Soon Mode)');
+        console.log('🍩 De\'Royale Donuts — Royale in Every Bite');
     </script>
 
 </body>
