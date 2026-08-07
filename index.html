@@ -17,7 +17,6 @@
             --border-color: #2a2a40;
             --font-heading: 'Playfair Display', serif;
             --font-body: 'Inter', sans-serif;
-            --shadow-gold: 0 0 30px rgba(201, 168, 76, 0.25);
             --discount-color: #ff6b8a;
         }
         * {
@@ -109,7 +108,7 @@
             background: var(--gold);
             color: var(--bg-color);
             transform: scale(1.04);
-            box-shadow: var(--shadow-gold);
+            box-shadow: 0 0 30px rgba(201, 168, 76, 0.25);
         }
         #cart-toggle .cart-icon-wrap {
             position: relative;
@@ -202,7 +201,7 @@
             box-shadow: 0 0 30px rgba(201, 168, 76, 0.3);
         }
         .grand-opening-banner h2 {
-            font-size: 2.6rem;
+            font-size: 2.8rem;
             letter-spacing: 2px;
             margin-bottom: 0.3rem;
             position: relative;
@@ -211,6 +210,7 @@
             background-size: 200% 200%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
             animation: shimmerText 4s ease-in-out infinite;
         }
         @keyframes shimmerText {
@@ -290,7 +290,7 @@
             }
         }
 
-        /* Floating gold particles (decorative) */
+        /* Floating particles */
         .floating-particle {
             position: absolute;
             border-radius: 50%;
@@ -1053,7 +1053,7 @@
                 font-size: 0.8rem;
             }
             .grand-opening-banner h2 {
-                font-size: 1.8rem;
+                font-size: 2rem;
             }
             .grand-opening-banner {
                 padding: 1.8rem 1rem;
@@ -1082,7 +1082,7 @@
                 gap: 0.4rem;
             }
             .grand-opening-banner h2 {
-                font-size: 1.4rem;
+                font-size: 1.6rem;
             }
             .grand-opening-banner .opening-subtitle {
                 font-size: 1rem;
@@ -1113,7 +1113,7 @@
     <!-- ===== MAIN ===== -->
     <main>
 
-        <!-- ===== GRAND OPENING BANNER — NEW ===== -->
+        <!-- ===== GRAND OPENING BANNER — NEW STYLE ===== -->
         <section class="grand-opening-banner">
             <!-- Decorative floating particles -->
             <div class="floating-particle"></div>
